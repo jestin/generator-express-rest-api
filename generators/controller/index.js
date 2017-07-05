@@ -10,7 +10,6 @@ module.exports = yeoman.generators.Base.extend({
     this.controllerClassName = 'Clowns';
     this.controllerInstanceName = 'clowns';
     this.controllerVersion = 'v1';
-    this.controllerFolderPath = 'circus';
     this.controllerRequirePathFromTest = '';
     this.controllerRoute = '/clowns/:clownid';
     this.controllerMethod = 'GET';
@@ -27,11 +26,6 @@ module.exports = yeoman.generators.Base.extend({
                           name    : 'controllerVersion',
                           message : 'Controller Version',
                           default :  this.controllerVersion });
-
-    this.questions.push({ type    : 'input',
-                          name    : 'controllerFolderPath',
-                          message : 'Controller Folder Path (relative path after the version folder, no starting or training slashes)',
-                          default :  this.controllerFolderPath });
 
     this.questions.push({ type    : 'input',
                           name    : 'controllerRoute',
@@ -53,8 +47,7 @@ module.exports = yeoman.generators.Base.extend({
       generator.controllerClassName = generator._.classify(answers.controllerName);
       generator.controllerInstanceName = generator._.camelize(generator.controllerName);
       generator.controllerVersion = answers.controllerVersion;
-      generator.controllerFolderPath = answers.controllerFolderPath.toLowerCase();
-      generator.controllerRequirePathFromTest = getTestRequirePrefix(generator.controllerFolderPath) + 'app/controllers/' + generator.controllerVersion + '/' + generator.controllerFolderPath + '/' + generator.controllerName + "-controller";
+      generator.controllerRequirePathFromTest =  '../../../../app/controllers/' + generator.controllerVersion + '/' + generator.controllerName + "-controller";
       generator.controllerRoute = answers.controllerRoute.toLowerCase();
       generator.controllerMethod = answers.controllerMethod;
 
@@ -87,26 +80,10 @@ module.exports = yeoman.generators.Base.extend({
   }
 });
 
-function getTestRequirePrefix(controllerFolderPath) {
-  var requirePrefix = '../../../../';
-
-  if(controllerFolderPath.length !== 0) {
-    var folderCount = (controllerFolderPath.match(/\//g) || []).length + 1;
-
-    for(var i = 0; i < folderCount; i++) {
-      requirePrefix = '../' + requirePrefix;
-    }
-  }
-
-  return requirePrefix;
-}
-
 function copyController(generator) {
   var controllerDestination = generator.destinationRoot() +
                               '/app/controllers/' +
                               generator.controllerVersion +
-                              '/' +
-                              generator.controllerFolderPath +
                               '/' +
                               generator.controllerName.toLowerCase() +
                               '-controller.js';
@@ -118,8 +95,6 @@ function copyControllerTest(generator) {
   var controllerTestDestination = generator.destinationRoot() +
                                   '/test/spec/controllers/' +
                                   generator.controllerVersion +
-                                  '/' +
-                                  generator.controllerFolderPath +
                                   '/' +
                                   generator.controllerName.toLowerCase() +
                                   '-controller.tests.js';
@@ -185,8 +160,6 @@ function writeToRouteConfig(generator, routeConfig, routeConfigPath, controllerR
 function getControllerRequirePath(generator) {
   return '../controllers/' +
          generator.controllerVersion +
-         '/' +
-         generator.controllerFolderPath +
          '/' +
          generator.controllerName.toLowerCase() +
          '-controller';

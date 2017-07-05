@@ -12,7 +12,7 @@ describe('<%= controllerClassName %>Controller Tests', function() {
 
     sinon.spy(res, "status");
 
-    <%= controllerInstanceName %>Controller = require('<%= controllerRequirePathFromTest %>');
+    <%= controllerInstanceName %>Controller = require('<%= controllerRequirePathFromTest %>')({});
   });
 
   describe('<%= controllerMethod.toLowerCase() %>()', function() {

@@ -11,4 +11,6 @@ function <%= controllerMethod.toLowerCase() %>(req, res, next) {
   <%= controllerMethod.toLowerCase() %>: <%= controllerMethod.toLowerCase() %>
 };
 
-module.exports = <%= controllerClassName %>Controller;
+module.exports = function(deps) {
+    return new <%= controllerClassName %>Controller(deps)
+};

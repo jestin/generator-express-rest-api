@@ -4,7 +4,7 @@ describe('<%= repositoryClassName %>Repository Tests', function() {
   var <%= repositoryInstanceName %>Repository;
 
   beforeEach(function() {
-    <%= repositoryInstanceName %>Repository = require('<%= repositoryRequirePathFromTest %>');
+    <%= repositoryInstanceName %>Repository = require('<%= repositoryRequirePathFromTest %>')({});
   });
 
   describe('get<%= repositoryClassName %>Data()', function() {

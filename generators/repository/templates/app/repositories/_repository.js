@@ -1,5 +1,5 @@
 
-function <%= repositoryClassName %>Repository() {
+function <%= repositoryClassName %>Repository(deps) {
 }
 
 function get<%= repositoryClassName %>Data(id) {
@@ -10,6 +10,6 @@ function get<%= repositoryClassName %>Data(id) {
     get<%= repositoryClassName %>Data: get<%= repositoryClassName %>Data
 };
 
-var <%= repositoryInstanceName %>Repository = new <%= repositoryClassName %>Repository();
-
-module.exports = <%= repositoryInstanceName %>Repository;
+module.exports = function(deps) {
+    return new <%= repositoryClassName %>Repository(deps);
+};

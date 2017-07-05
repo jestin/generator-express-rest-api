@@ -7,7 +7,6 @@ module.exports = yeoman.generators.Base.extend({
     this.repositoryName = 'clown';
     this.repositoryClassName = 'Clown';
     this.repositoryInstanceName = 'clown';
-    this.repositoryFolderPath = 'circus';
     this.repositoryRequirePathFromTest = '';
   },
 
@@ -17,11 +16,6 @@ module.exports = yeoman.generators.Base.extend({
                           message : 'Repository Name (dash delimited, leave off -repository)',
                           default : this.repositoryName });
 
-    this.questions.push({ type    : 'input',
-                          name    : 'repositoryFolderPath',
-                          message : 'Repository Folder Path (relative path, no starting or training slashes)',
-                          default :  this.repositoryFolderPath });
-
     var done = this.async();
 
     var generator = this;
@@ -30,8 +24,7 @@ module.exports = yeoman.generators.Base.extend({
       generator.repositoryName = answers.repositoryName.toLowerCase();
       generator.repositoryClassName = generator._.classify(answers.repositoryName);
       generator.repositoryInstanceName = generator._.camelize(generator.repositoryName);
-      generator.repositoryFolderPath = answers.repositoryFolderPath.toLowerCase();
-      generator.repositoryRequirePathFromTest = getTestRequirePrefix(generator.repositoryFolderPath) + 'app/repositories/' + generator.repositoryFolderPath + '/' + generator.repositoryName + '-repository';
+      generator.repositoryRequirePathFromTest =  '../../../app/repositories/' + generator.repositoryName + '-repository';
 
       done();
     };
@@ -60,25 +53,9 @@ module.exports = yeoman.generators.Base.extend({
   }
 });
 
-function getTestRequirePrefix(repositoryFolderPath) {
-  var requirePrefix = '../../../';
-
-  if(repositoryFolderPath.length !== 0) {
-    var folderCount = (repositoryFolderPath.match(/\//g) || []).length + 1;
-
-    for(var i = 0; i < folderCount; i++) {
-      requirePrefix = '../' + requirePrefix;
-    }
-  }
-
-  return requirePrefix;
-}
-
 function copyRepository(generator) {
   var repositoryDestination = generator.destinationRoot() +
                               '/app/repositories/' +
-                              generator.repositoryFolderPath +
-                              '/' +
                               generator.repositoryName.toLowerCase() +
                               '-repository.js';
 
@@ -88,8 +65,6 @@ function copyRepository(generator) {
 function copyRepositoryTest(generator) {
   var repositoryTestDestination = generator.destinationRoot() +
                                   '/test/spec/repositories/' +
-                                  generator.repositoryFolderPath +
-                                  '/' +
                                   generator.repositoryName.toLowerCase() +
                                   '-repository.tests.js';
 

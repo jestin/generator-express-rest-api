@@ -71,6 +71,7 @@ module.exports = yeoman.generators.Base.extend({
 
   writingStep: function() {
     copyTemplate(this, 'server.js', 'server.js');
+    copyTemplate(this, '.gitignore', '.gitignore');
 
     copyTemplate(this, 'app/config/route.config.json', 'app/config/route.config.json');
     copyTemplate(this, 'app/config/route-config.js', 'app/config/route-config.js');

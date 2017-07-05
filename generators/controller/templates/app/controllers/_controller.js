@@ -1,5 +1,6 @@
 
-function <%= controllerClassName %>Controller() {
+function <%= controllerClassName %>Controller(deps) {
+    // set dependencies
 }
 
 function <%= controllerMethod.toLowerCase() %>(req, res, next) {
@@ -10,6 +11,4 @@ function <%= controllerMethod.toLowerCase() %>(req, res, next) {
   <%= controllerMethod.toLowerCase() %>: <%= controllerMethod.toLowerCase() %>
 };
 
-var <%= controllerInstanceName %>Controller = new <%= controllerClassName %>Controller();
-
-module.exports = <%= controllerInstanceName %>Controller;
+module.exports = <%= controllerClassName %>Controller;

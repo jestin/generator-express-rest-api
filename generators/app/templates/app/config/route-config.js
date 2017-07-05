@@ -45,7 +45,7 @@ function loadController(routeItem) {
   }
 
   try {
-    controller = require(routeItem.controller);
+    controller = new require(routeItem.controller)({});
   }
   catch(e) {
     throw 'Unable to load ' + routeItem.controller + ": " + e;

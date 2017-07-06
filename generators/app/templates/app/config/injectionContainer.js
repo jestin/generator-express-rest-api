@@ -27,14 +27,12 @@ module.exports = function(deps) {
 		var deps = {};
 		if (registry.dependencies[interface].dependencies) {
 			_.each(registry.dependencies[interface].dependencies, dep => {
-				//try {
-				var newDep = getConcrete(dep);
-				deps[dep] = newDep;
-				//deps[dep] = getConcrete(dep);
-				//}
-				//catch(err) {
-				//throw new Error(`could not find dependency ${dep} of dependency ${interface}`, err);
-				//}
+				try {
+					deps[dep] = getConcrete(dep);
+				}
+				catch(err) {
+					throw new Error(`could not find dependency ${dep} of dependency ${interface}`, err);
+				}
 			});
 		}
 

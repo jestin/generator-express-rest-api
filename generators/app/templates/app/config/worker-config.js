@@ -4,6 +4,7 @@ var application = express();
 var bodyParser = require('body-parser');
 var routeConfig = require('./route-config');
 var settingsConfig = require('./settings/settings-config');
+application.injectionContainer = require('./injectionContainer.js')({ registry: './dependencies.json'});
 
 function configureWorker(application) {
 	configureApplication(application);

@@ -148,21 +148,11 @@ function doesRouteExistInConfig(routeConfig, controllerRoute) {
 }
 
 function writeToRouteConfig(generator, routeConfig, routeConfigPath, controllerRoute) {
-	var controllerRequirePath = getControllerRequirePath(generator);
-
 	routeConfig.routes.push({ route: controllerRoute,
 		method: generator.controllerMethod,
-		controller: controllerRequirePath });
+		controller: generator.controllerName + 'Controller' });
 
 	fs.writeFileSync(routeConfigPath, JSON.stringify(routeConfig, null, 2));
-}
-
-function getControllerRequirePath(generator) {
-	return '../controllers/' +
-		generator.controllerVersion +
-		'/' +
-		generator.controllerName.toLowerCase() +
-		'-controller';
 }
 
 function copyTemplate(generator, template, path) {

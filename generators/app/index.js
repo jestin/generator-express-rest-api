@@ -76,6 +76,8 @@ module.exports = yeoman.generators.Base.extend({
 		copyTemplate(this, 'app/config/route.config.json', 'app/config/route.config.json');
 		copyTemplate(this, 'app/config/route-config.js', 'app/config/route-config.js');
 		copyTemplate(this, 'app/config/worker-config.js', 'app/config/worker-config.js');
+		copyTemplate(this, 'app/config/injectionContainer.js', 'app/config/injectionContainer.js');
+		copyTemplate(this, 'app/config/dependencies.json', 'app/config/dependencies.json');
 
 		copyTemplate(this, 'app/config/settings/settings-config.js', 'app/config/settings/settings-config.js');
 		copyTemplate(this, 'app/config/settings/settings.config.dev.json', 'app/config/settings/settings.config.dev.json');
@@ -93,7 +95,7 @@ module.exports = yeoman.generators.Base.extend({
 	},
 
 	endStep: function() {
-		this.npmInstall(['express', 'cluster-service', 'body-parser'], { 'save': true });
+		this.npmInstall(['express', 'cluster-service', 'body-parser', 'underscore'], { 'save': true });
 		this.npmInstall(['mocha', 'chai', 'sinon', 'istanbul'], { 'saveDev': true });
 	}
 });

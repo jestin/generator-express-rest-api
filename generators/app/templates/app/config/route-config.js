@@ -9,7 +9,7 @@ function registerRoutes(application) {
 	for(var i = 0, length = config.routes.length; i < length; i++) {
 		var routeItem = config.routes[i];
 
-		var controller = loadController(routeItem);
+		var controller = loadController(routeItem, application);
 		var route = getRoute(routeItem);
 		var method = getMethod(routeItem);
 		var action = getAction(routeItem);
@@ -37,7 +37,7 @@ function loadRouteConfig() {
 	return config;
 }
 
-function loadController(routeItem) {
+function loadController(routeItem, application) {
 	var controller;
 
 	if(!routeItem || !routeItem.controller) {
@@ -45,7 +45,7 @@ function loadController(routeItem) {
 	}
 
 	try {
-		controller = require(routeItem.controller)({});
+		controller = application.injectionContainer.getConcrete(routeItem.controller);
 	}
 	catch(e) {
 		throw 'Unable to load ' + routeItem.controller + ": " + e;

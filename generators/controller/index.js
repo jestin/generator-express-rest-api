@@ -2,6 +2,7 @@ var yeoman = require('yeoman-generator');
 var fs = require('fs');
 
 const routeConfigRequirePath = '/app/config/route.config.json';
+const dependenciesRequirePath = '/app/config/dependencies.json';
 
 module.exports = yeoman.generators.Base.extend({
 	initializingStep: function() {
@@ -64,7 +65,7 @@ module.exports = yeoman.generators.Base.extend({
 	},
 
 	writingStep: function() {
-		if(tryUpdateRouteConfig(this)) {
+		if(tryUpdateRouteConfig(this) && tryUpdateDependencies(this)) {
 			copyController(this);
 			copyControllerTest(this);
 		}
@@ -134,6 +135,36 @@ function tryUpdateRouteConfig(generator) {
 	return success;
 }
 
+function tryUpdateDependencies(generator) {
+	var success = false;
+	var dependenciesPath = generator.destinationRoot() + dependenciesRequirePath;
+
+	try{
+		var dependenciesConfig = require(dependenciesPath);
+
+		if (dependenciesConfig && dependenciesConfig.dependencies) {
+			var dependencyName = generator.controllerName + "Controller";
+
+			if (dependenciesConfig.dependencies[dependencyName]) {
+				console.log('dependency already exists in dependencies.json. Dependency: ' + dependencyName);
+			}
+			else {
+				writeToDependenciesConfig(generator, dependenciesConfig, dependenciesPath, dependencyName);
+				success = true;
+			}
+		}
+		else {
+			console.log('Badly formatted dependencies config "' + dependenciesPath + '", dependencies array is not defined');
+		}
+	}
+	catch (e) {
+		var message = 'Error parsing and updating dependencies config "' + dependenciesPath + '":' + e;
+		console.log(message);
+	}
+
+	return success;
+}
+
 function doesRouteExistInConfig(routeConfig, controllerRoute) {
 	var i, routesLength;
 
@@ -153,6 +184,22 @@ function writeToRouteConfig(generator, routeConfig, routeConfigPath, controllerR
 		controller: generator.controllerName + 'Controller' });
 
 	fs.writeFileSync(routeConfigPath, JSON.stringify(routeConfig, null, 2));
+}
+
+function writeToDependenciesConfig(generator, dependenciesConfig, dependenciesPath, dependencyName) {
+	dependenciesConfig.dependencies[dependencyName] = {
+		concrete: getControllerRequirePath(generator)
+	};
+
+	fs.writeFileSync(dependenciesPath, JSON.stringify(dependenciesConfig, null, 2));
+}
+
+function getControllerRequirePath(generator) {
+	return '../controllers/' +
+		generator.controllerVersion +
+		'/' +
+		generator.controllerName.toLowerCase() +
+		'-controller';
 }
 
 function copyTemplate(generator, template, path) {

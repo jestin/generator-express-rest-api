@@ -1,40 +1,40 @@
 
 describe('<%= controllerClassName %>Controller Tests', function() {
 
-  var <%= controllerInstanceName %>Controller;
-  var req;
-  var res;
-  var next;
+	var <%= controllerInstanceName %>Controller;
+	var req;
+	var res;
+	var next;
 
-  beforeEach(function() {
-    req = {};
-    res = { status: function(code) { return { json: function(obj) {} }} };
+	beforeEach(function() {
+		req = {};
+		res = { status: function(code) { return { json: function(obj) {} }} };
 
-    sinon.spy(res, "status");
+		sinon.spy(res, "status");
 
-    <%= controllerInstanceName %>Controller = require('<%= controllerRequirePathFromTest %>')({});
-  });
+		<%= controllerInstanceName %>Controller = require('<%= controllerRequirePathFromTest %>')({});
+	});
 
-  describe('<%= controllerMethod.toLowerCase() %>()', function() {
+	describe('<%= controllerMethod.toLowerCase() %>()', function() {
 
-    it('should be a function', function(done) {
-      expect(<%= controllerInstanceName %>Controller.<%= controllerMethod.toLowerCase() %>).to.be.a('function');
-      done();
-    });
+		it('should be a function', function(done) {
+			expect(<%= controllerInstanceName %>Controller.<%= controllerMethod.toLowerCase() %>).to.be.a('function');
+			done();
+		});
 
-    it('should call res.status() one time', function(done) {
-      <%= controllerInstanceName %>Controller.<%= controllerMethod.toLowerCase() %>(req, res, next);
+		it('should call res.status() one time', function(done) {
+			<%= controllerInstanceName %>Controller.<%= controllerMethod.toLowerCase() %>(req, res, next);
 
-      expect(res.status.callCount).to.equal(1);
-      done();
-    });
+			expect(res.status.callCount).to.equal(1);
+			done();
+		});
 
-    it('should call res.status() with 200', function(done) {
-        <%= controllerInstanceName %>Controller.<%= controllerMethod.toLowerCase() %>(req, res, next);
+		it('should call res.status() with 200', function(done) {
+			<%= controllerInstanceName %>Controller.<%= controllerMethod.toLowerCase() %>(req, res, next);
 
-      expect(res.status.calledWith(200)).to.equal(true);
-      done();
-    });
+			expect(res.status.calledWith(200)).to.equal(true);
+			done();
+		});
 
-  });
+	});
 });

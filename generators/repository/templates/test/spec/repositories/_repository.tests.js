@@ -1,18 +1,18 @@
 
 describe('<%= repositoryClassName %>Repository Tests', function() {
 
-  var <%= repositoryInstanceName %>Repository;
+	var <%= repositoryInstanceName %>Repository;
 
-  beforeEach(function() {
-    <%= repositoryInstanceName %>Repository = require('<%= repositoryRequirePathFromTest %>')({});
-  });
+	beforeEach(function() {
+		<%= repositoryInstanceName %>Repository = require('<%= repositoryRequirePathFromTest %>')({});
+	});
 
-  describe('get<%= repositoryClassName %>Data()', function() {
+	describe('get<%= repositoryClassName %>Data()', function() {
 
-    it('should be a function', function(done) {
-      expect(<%= repositoryInstanceName %>Repository.get<%= repositoryClassName %>Data).to.be.a('function');
-      done();
-    });
+		it('should be a function', function(done) {
+			expect(<%= repositoryInstanceName %>Repository.get<%= repositoryClassName %>Data).to.be.a('function');
+			done();
+		});
 
-  });
+	});
 });

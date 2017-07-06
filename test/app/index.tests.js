@@ -1,19 +1,19 @@
 
 describe('App Generator Tests', function() {
 
-  var appGenerator;
+	var appGenerator;
 
-  beforeEach(function() {
-    appGenerator = require('../../generators/app/index');
-  });
+	beforeEach(function() {
+		appGenerator = require('../../generators/app/index');
+	});
 
-  describe('generator', function() {
+	describe('generator', function() {
 
-    it('should be defined', function(done) {
-      expect(appGenerator).to.exist;
+		it('should be defined', function(done) {
+			expect(appGenerator).to.exist;
 
-      done();
-    });
+			done();
+		});
 
-  });
+	});
 });

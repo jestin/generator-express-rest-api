@@ -1,16 +1,16 @@
 
 function <%= controllerClassName %>Controller(deps) {
-    // set dependencies
+	// set dependencies
 }
 
 function <%= controllerMethod.toLowerCase() %>(req, res, next) {
-  res.status(200).json({ hello: 'world' });
+	res.status(200).json({ hello: 'world' });
 }
 
 <%= controllerClassName %>Controller.prototype = {
-  <%= controllerMethod.toLowerCase() %>: <%= controllerMethod.toLowerCase() %>
+	<%= controllerMethod.toLowerCase() %>: <%= controllerMethod.toLowerCase() %>
 };
 
 module.exports = function(deps) {
-    return new <%= controllerClassName %>Controller(deps)
+	return new <%= controllerClassName %>Controller(deps)
 };

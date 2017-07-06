@@ -7,7 +7,6 @@ module.exports = yeoman.generators.Base.extend({
 		this.serviceName = 'clown';
 		this.serviceClassName = 'Clown';
 		this.serviceInstanceName = 'clown';
-		this.serviceFolderPath = 'circus';
 		this.serviceRequirePathFromTest = '';
 	},
 
@@ -17,11 +16,6 @@ module.exports = yeoman.generators.Base.extend({
 			message : 'Service Name (dash delimited, leave off -service)',
 			default : this.serviceName });
 
-		this.questions.push({ type    : 'input',
-			name    : 'serviceFolderPath',
-			message : 'Service Folder Path (relative path, no starting or training slashes)',
-			default :  this.serviceFolderPath });
-
 		var done = this.async();
 
 		var generator = this;
@@ -30,8 +24,7 @@ module.exports = yeoman.generators.Base.extend({
 			generator.serviceName = answers.serviceName.toLowerCase();
 			generator.serviceClassName = generator._.classify(answers.serviceName);
 			generator.serviceInstanceName = generator._.camelize(generator.serviceName);
-			generator.serviceFolderPath = answers.serviceFolderPath.toLowerCase();
-			generator.serviceRequirePathFromTest = getTestRequirePrefix(generator.serviceFolderPath) + 'app/services/' + generator.serviceFolderPath + '/' + generator.serviceName + '-service';
+			generator.serviceRequirePathFromTest =  '../../../app/services/' + generator.serviceName + '-service';
 
 			done();
 		};
@@ -60,25 +53,9 @@ module.exports = yeoman.generators.Base.extend({
 	}
 });
 
-function getTestRequirePrefix(serviceFolderPath) {
-	var requirePrefix = '../../../';
-
-	if(serviceFolderPath.length !== 0) {
-		var folderCount = (serviceFolderPath.match(/\//g) || []).length + 1;
-
-		for(var i = 0; i < folderCount; i++) {
-			requirePrefix = '../' + requirePrefix;
-		}
-	}
-
-	return requirePrefix;
-}
-
 function copyService(generator) {
 	var serviceDestination = generator.destinationRoot() +
 		'/app/services/' +
-		generator.serviceFolderPath +
-		'/' +
 		generator.serviceName.toLowerCase() +
 		'-service.js';
 
@@ -88,8 +65,6 @@ function copyService(generator) {
 function copyServiceTest(generator) {
 	var serviceTestDestination = generator.destinationRoot() +
 		'/test/spec/services/' +
-		generator.serviceFolderPath +
-		'/' +
 		generator.serviceName.toLowerCase() +
 		'-service.tests.js';
 

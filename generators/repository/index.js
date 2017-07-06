@@ -1,6 +1,8 @@
 var yeoman = require('yeoman-generator');
 var fs = require('fs');
 
+const dependenciesRequirePath = '/app/config/dependencies.json';
+
 module.exports = yeoman.generators.Base.extend({
 	initializingStep: function() {
 		this.questions = [];
@@ -39,8 +41,10 @@ module.exports = yeoman.generators.Base.extend({
 	},
 
 	writingStep: function() {
-		copyRepository(this);
-		copyRepositoryTest(this);
+		if(tryUpdateDependencies(this)) {
+			copyRepository(this);
+			copyRepositoryTest(this);
+		}
 	},
 
 	conflictsStep: function() {
@@ -78,4 +82,48 @@ function copyTemplate(generator, template, path) {
 	else {
 		generator.template(template, path);
 	}
+}
+
+function tryUpdateDependencies(generator) {
+	var success = false;
+	var dependenciesPath = generator.destinationRoot() + dependenciesRequirePath;
+
+	try{
+		var dependenciesConfig = require(dependenciesPath);
+
+		if (dependenciesConfig && dependenciesConfig.dependencies) {
+			var dependencyName = generator.repositoryName + "Repository";
+
+			if (dependenciesConfig.dependencies[dependencyName]) {
+				console.log('dependency already exists in dependencies.json. Dependency: ' + dependencyName);
+			}
+			else {
+				writeToDependenciesConfig(generator, dependenciesConfig, dependenciesPath, dependencyName);
+				success = true;
+			}
+		}
+		else {
+			console.log('Badly formatted dependencies config "' + dependenciesPath + '", dependencies array is not defined');
+		}
+	}
+	catch (e) {
+		var message = 'Error parsing and updating dependencies config "' + dependenciesPath + '":' + e;
+		console.log(message);
+	}
+
+	return success;
+}
+
+function writeToDependenciesConfig(generator, dependenciesConfig, dependenciesPath, dependencyName) {
+	dependenciesConfig.dependencies[dependencyName] = {
+		concrete: getRepositoryRequirePath(generator)
+	};
+
+	fs.writeFileSync(dependenciesPath, JSON.stringify(dependenciesConfig, null, 2));
+}
+
+function getRepositoryRequirePath(generator) {
+	return '../repositories/' +
+		generator.repositoryName.toLowerCase() +
+		'-repository';
 }

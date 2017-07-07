@@ -72,6 +72,7 @@ module.exports = yeoman.generators.Base.extend({
 	writingStep: function() {
 		copyTemplate(this, 'server.js', 'server.js');
 		copyTemplate(this, '.gitignore', '.gitignore');
+		copyTemplate(this, '_.eslintrc.js', '.eslintrc.js');
 
 		copyTemplate(this, 'app/config/route.config.json', 'app/config/route.config.json');
 		copyTemplate(this, 'app/config/route-config.js', 'app/config/route-config.js');
@@ -95,7 +96,7 @@ module.exports = yeoman.generators.Base.extend({
 	},
 
 	endStep: function() {
-		this.npmInstall(['express', 'cluster-service', 'body-parser', 'underscore'], { 'save': true });
+		this.npmInstall(['express', 'cluster-service', 'body-parser', 'underscore', 'eslint'], { 'save': true });
 		this.npmInstall(['mocha', 'chai', 'sinon', 'istanbul'], { 'saveDev': true });
 	}
 });

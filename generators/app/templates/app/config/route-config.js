@@ -73,7 +73,6 @@ function getMethod(routeItem) {
 		case 'post':
 		case 'delete':
 			return method;
-			break;
 		default:
 			throw new Error('Invalid REST "method" property in "lib/config/route.config.json": ' + method);
 	}

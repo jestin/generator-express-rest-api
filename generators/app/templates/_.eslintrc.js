@@ -54,18 +54,16 @@ module.exports = {
             "declaration"
         ],
         "generator-star-spacing": "error",
-        "global-require": "error",
         "guard-for-in": "error",
         "handle-callback-err": "error",
         "id-blacklist": "error",
         "id-length": [
-			"error",
-			"min": 1
-		],
+			"error", {
+				"min": 1
+			}],
         "id-match": "error",
         "indent": "off",
         "indent-legacy": "off",
-        "init-declarations": "error",
         "jsx-quotes": "error",
         "key-spacing": "error",
         "keyword-spacing": "error",
@@ -100,7 +98,6 @@ module.exports = {
         "no-div-regex": "error",
         "no-duplicate-imports": "error",
         "no-else-return": "error",
-        "no-empty-function": "error",
         "no-eq-null": "error",
         "no-eval": "error",
         "no-extend-native": "error",
@@ -138,7 +135,6 @@ module.exports = {
         "no-octal-escape": "error",
         "no-param-reassign": "error",
         "no-path-concat": "error",
-        "no-plusplus": "error",
         "no-process-env": "error",
         "no-process-exit": "error",
         "no-proto": "error",

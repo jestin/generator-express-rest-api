@@ -6,7 +6,7 @@ function RouteConfig() {
 function registerRoutes(application) {
 	var config = loadRouteConfig();
 
-	for(var i = 0, length = config.routes.length; i < length; i++) {
+	for (var i = 0, length = config.routes.length; i < length; i++) {
 		var routeItem = config.routes[i];
 
 		var controller = loadController(routeItem, application);
@@ -26,12 +26,11 @@ function loadRouteConfig() {
 	try {
 		config = require('./route.config.json');
 
-		if(!config.routes || config.routes.length === 0) {
-			throw '"routes" not defined';
+		if (!config.routes || !config.routes.length) {
+			throw new Error('"routes" not defined');
 		}
-	}
-	catch(e) {
-		throw 'Unable to parse "lib/config/route.config.json": ' + e;
+	} catch (e) {
+		throw new Error('Unable to parse "lib/config/route.config.json": ' + e);
 	}
 
 	return config;
@@ -40,36 +39,35 @@ function loadRouteConfig() {
 function loadController(routeItem, application) {
 	var controller;
 
-	if(!routeItem || !routeItem.controller) {
-		throw 'Undefined "controller" property in "lib/config/route.config.json"';
+	if (!routeItem || !routeItem.controller) {
+		throw new Error('Undefined "controller" property in "lib/config/route.config.json"');
 	}
 
 	try {
 		controller = application.injectionContainer.getConcrete(routeItem.controller);
-	}
-	catch(e) {
-		throw 'Unable to load ' + routeItem.controller + ": " + e;
+	} catch (e) {
+		throw new Error('Unable to load ' + routeItem.controller + ": " + e);
 	}
 
 	return controller;
 }
 
 function getRoute(routeItem) {
-	if(!routeItem || !routeItem.route || routeItem.route.length === 0) {
-		throw 'Undefined or empty "route" property in "lib/config/route.config.json"';
+	if (!routeItem || !routeItem.route || routeItem.route.length === 0) {
+		throw new Error('Undefined or empty "route" property in "lib/config/route.config.json"');
 	}
 
 	return routeItem.route;
 }
 
 function getMethod(routeItem) {
-	if(!routeItem || !routeItem.method || routeItem.method.length === 0) {
-		throw 'Undefined or empty "method" property in "lib/config/route.config.json"';
+	if (!routeItem || !routeItem.method || routeItem.method.length === 0) {
+		throw new Error('Undefined or empty "method" property in "lib/config/route.config.json"');
 	}
 
 	var method = routeItem.method.toLowerCase();
 
-	switch(method) {
+	switch (method) {
 		case 'get':
 		case 'put':
 		case 'post':
@@ -77,12 +75,12 @@ function getMethod(routeItem) {
 			return method;
 			break;
 		default:
-			throw 'Invalid REST "method" property in "lib/config/route.config.json": ' + method;
+			throw new Error('Invalid REST "method" property in "lib/config/route.config.json": ' + method);
 	}
 }
 
 function getAction(routeItem) {
-	if(!routeItem || !routeItem.action || routeItem.action.length === 0) {
+	if (!routeItem || !routeItem.action || routeItem.action.length === 0) {
 		return getMethod(routeItem);
 	}
 	return routeItem.action;

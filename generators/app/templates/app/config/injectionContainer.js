@@ -12,42 +12,39 @@ module.exports = function(deps) {
 		}
 	}
 
-	function getConcrete(interface) {
-		if (!registry.dependencies[interface]) {
-			throw new Error(`could not find interface ${interface} in dependency registry`);
+	function getConcrete(iface) {
+		if (!registry.dependencies[iface]) {
+			throw new Error(`could not find iface ${iface} in dependency registry`);
 
 		}
 		// first check the singletons list to avoid
 		// creating a second instance
-		if (singletons[interface]) {
-			return singletons[interface];
+		if (singletons[iface]) {
+			return singletons[iface];
 		}
 
 		// resolve all dependencies of the dependency
 		var deps = {};
-		if (registry.dependencies[interface].dependencies) {
-			_.each(registry.dependencies[interface].dependencies, dep => {
+		if (registry.dependencies[iface].dependencies) {
+			_.each(registry.dependencies[iface].dependencies, dep => {
 				try {
 					deps[dep] = getConcrete(dep);
-				}
-				catch(err) {
-					throw new Error(`could not find dependency ${dep} of dependency ${interface}`, err);
+				} catch (err) {
+					throw new Error(`could not find dependency ${dep} of dependency ${iface}`, err);
 				}
 			});
 		}
 
 		// create instance
-		var instance = require(registry.dependencies[interface].concrete)(deps);
+		var instance = require(registry.dependencies[iface].concrete)(deps);
 
 		// save in singletons list if singleton is specified
-		if (registry.dependencies[interface].singleton) {
-			singletons[interface] = instance;
+		if (registry.dependencies[iface].singleton) {
+			singletons[iface] = instance;
 		}
 
 		return instance;
 	}
 
-	return {
-		getConcrete: getConcrete
-	}
-}
+	return { getConcrete };
+};

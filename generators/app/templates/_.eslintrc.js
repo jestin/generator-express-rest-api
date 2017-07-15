@@ -180,7 +180,10 @@ module.exports = {
         "no-with": "error",
         "nonblock-statement-body-position": "error",
         "object-curly-newline": "error",
-        "object-curly-spacing": "error",
+        "object-curly-spacing": [
+			"error",
+			"always"
+		],
         "object-property-newline": "error",
         "object-shorthand": "error",
         "one-var": "off",
@@ -198,7 +201,10 @@ module.exports = {
         "prefer-rest-params": "error",
         "prefer-spread": "error",
         "prefer-template": "error",
-        "quote-props": "error",
+        "quote-props": [
+			"error",
+			"as-needed"
+		],
         "quotes": [
             "error",
             "single"

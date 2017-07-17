@@ -2,12 +2,14 @@
 function <%= repositoryClassName %>Repository(deps) {
 }
 
-function get<%= repositoryClassName %>Data(id) {
+/* eslint-disable object-curly-newline, object-shorthand */
+function retrieve(id) {
 	return { id: id };
 }
+/* eslint-enable object-curly-newline, object-shorthand */
 
 <%= repositoryClassName %>Repository.prototype = {
-	get<%= repositoryClassName %>Data: get<%= repositoryClassName %>Data
+	retrieve: retrieve
 };
 
 module.exports = function(deps) {

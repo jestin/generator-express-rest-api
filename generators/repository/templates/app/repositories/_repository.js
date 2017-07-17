@@ -2,14 +2,30 @@
 function <%= repositoryClassName %>Repository(deps) {
 }
 
+function create(<%= repositoryClassName.toLowerCase() %>) {
+	return Promise.resolve();
+}
+
 /* eslint-disable object-curly-newline, object-shorthand */
 function retrieve(id) {
-	return { id: id };
+	return Promise.resolve({ id: id });
 }
+
+function update(<%= repositoryClassName.toLowerCase() %>) {
+	return <%= repositoryClassName.toLowerCase() %>;
+}
+
+function delete(<%= repositoryClassName.toLowerCase() %>) {
+	return Promise.resolve(true);
+}
+
 /* eslint-enable object-curly-newline, object-shorthand */
 
 <%= repositoryClassName %>Repository.prototype = {
-	retrieve: retrieve
+	create,
+	retrieve,
+	update,
+	delete
 };
 
 module.exports = function(deps) {

@@ -1,4 +1,5 @@
-var settingsConfig = require('./settings/settings-config');
+const settingsConfig = require('./settings/settings-config');
+const _ = require('underscore');
 
 function RouteConfig() {
 }
@@ -6,16 +7,14 @@ function RouteConfig() {
 function registerRoutes(application) {
 	var config = loadRouteConfig();
 
-	for (var i = 0, length = config.routes.length; i < length; i++) {
-		var routeItem = config.routes[i];
+	_.each(config.routes, routeItem => {
+		const controller = loadController(routeItem, application);
+		const route = getRoute(routeItem);
+		const method = getMethod(routeItem);
+		const action = getAction(routeItem);
 
-		var controller = loadController(routeItem, application);
-		var route = getRoute(routeItem);
-		var method = getMethod(routeItem);
-		var action = getAction(routeItem);
-
-		registerRoute(application, controller, route, method, action);
-	}
+		registerRoute(application)(controller)(route)(method, action);
+	});
 
 	createConfigRoute(application);
 }
@@ -30,7 +29,7 @@ function loadRouteConfig() {
 			throw new Error('"routes" not defined');
 		}
 	} catch (e) {
-		throw new Error('Unable to parse "lib/config/route.config.json": ' + e);
+		throw new Error(`Unable to parse "lib/config/route.config.json": ${e}`);
 	}
 
 	return config;
@@ -46,7 +45,7 @@ function loadController(routeItem, application) {
 	try {
 		controller = application.injectionContainer.getConcrete(routeItem.controller);
 	} catch (e) {
-		throw new Error('Unable to load ' + routeItem.controller + ": " + e);
+		throw new Error(`Unable to load ${e}`);
 	}
 
 	return controller;
@@ -74,7 +73,7 @@ function getMethod(routeItem) {
 		case 'delete':
 			return method;
 		default:
-			throw new Error('Invalid REST "method" property in "lib/config/route.config.json": ' + method);
+			throw new Error(`Invalid REST "method" property in "lib/config/route.config.json": ${method}`);
 	}
 }
 
@@ -86,21 +85,25 @@ function getAction(routeItem) {
 }
 
 
-function registerRoute(application, controller, route, method, action) {
-	application.route(route)[method](function(req, res, next) {
-		controller[action](req, res, next);
-	});
+function registerRoute(application) {
+	return controller => {
+		return route => {
+			return (method, action) => {
+				application.route(route)[method](function(req, res, next) {
+					controller[action](req, res, next);
+				});
+			};
+		};
+	};
 }
 
 function createConfigRoute(application) {
-	application.route('/config').get(function(req, res, next) {
+	application.route('/config').get(function(req, res) {
 		res.status(200).json(settingsConfig.settings);
 	});
 }
 
-RouteConfig.prototype = {
-	registerRoutes: registerRoutes
-};
+RouteConfig.prototype = { registerRoutes };
 
 var routeConfig = new RouteConfig();
 

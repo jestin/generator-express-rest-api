@@ -1,9 +1,18 @@
 module.exports = {
+	"plugins": [
+		"mocha",
+		"sinon"
+	],
     "env": {
         "es6": true,
-        "node": true
+        "node": true,
+		"mocha": true
     },
     "extends": "eslint:recommended",
+	"globals": {
+		"expect": true,
+		"sinon": true
+	},
     "parserOptions": {
         "sourceType": "module"
     },
@@ -13,7 +22,10 @@ module.exports = {
         "array-bracket-spacing": "error",
         "array-callback-return": "error",
         "array-element-newline": "error",
-        "arrow-body-style": "error",
+        "arrow-body-style": [
+			"error",
+			"always"
+		],
 		"arrow-parens": [
 			"error",
 			"as-needed"
@@ -40,7 +52,7 @@ module.exports = {
         "consistent-this": "error",
         "curly": "error",
         "default-case": "error",
-        "dot-location": "error",
+        "dot-location": [ "error", "property" ],
         "dot-notation": "error",
         "eol-last": "error",
         "eqeqeq": "error",
@@ -81,9 +93,7 @@ module.exports = {
         "max-lines": "error",
         "max-nested-callbacks": "error",
         "max-params": "error",
-        "max-statements": "error",
         "max-statements-per-line": "error",
-        "multiline-ternary": "error",
         "new-parens": "error",
         "newline-after-var": "off",
         "newline-per-chained-call": "error",
@@ -155,7 +165,6 @@ module.exports = {
         "no-sync": "error",
         "no-tabs": "off",
         "no-template-curly-in-string": "error",
-        "no-ternary": "error",
         "no-throw-literal": "error",
         "no-trailing-spaces": "error",
         "no-undef-init": "error",
@@ -206,7 +215,10 @@ module.exports = {
             "error",
             "single"
         ],
-        "radix": "error",
+		"radix": [
+			"error",
+			"as-needed"
+		],
         "require-await": "error",
         "require-jsdoc": "off",
         "rest-spread-spacing": "error",

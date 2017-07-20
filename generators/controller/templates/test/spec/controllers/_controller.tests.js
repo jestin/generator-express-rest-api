@@ -8,9 +8,13 @@ describe('<%= controllerClassName %>Controller Tests', function() {
 
 	beforeEach(function() {
 		req = {};
-		res = { status: function(code) { return { json: function(obj) {} }} };
+		res = {
+			status() {
+				return { json() {} };
+			}
+		};
 
-		sinon.spy(res, "status");
+		sinon.spy(res, 'status');
 
 		<%= controllerInstanceName %>Controller = require('<%= controllerRequirePathFromTest %>')({});
 	});

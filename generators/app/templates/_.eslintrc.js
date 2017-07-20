@@ -24,7 +24,6 @@ module.exports = {
         "brace-style": "error",
         "callback-return": "error",
         "camelcase": "error",
-        "capitalized-comments": "error",
         "class-methods-use-this": "error",
         "comma-dangle": "error",
         "comma-spacing": [
@@ -118,7 +117,6 @@ module.exports = {
         "no-lone-blocks": "error",
         "no-lonely-if": "error",
         "no-loop-func": "error",
-        "no-magic-numbers": "error",
         "no-mixed-operators": "error",
         "no-mixed-requires": "error",
         "no-multi-assign": "error",

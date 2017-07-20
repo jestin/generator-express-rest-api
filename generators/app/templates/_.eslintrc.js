@@ -14,7 +14,10 @@ module.exports = {
         "array-callback-return": "error",
         "array-element-newline": "error",
         "arrow-body-style": "error",
-        "arrow-parens": "error",
+		"arrow-parens": [
+			"error",
+			"as-needed"
+		],
         "arrow-spacing": "error",
         "block-scoped-var": "error",
         "block-spacing": "error",
@@ -82,7 +85,6 @@ module.exports = {
         "max-statements": "error",
         "max-statements-per-line": "error",
         "multiline-ternary": "error",
-        "new-cap": "error",
         "new-parens": "error",
         "newline-after-var": "off",
         "newline-per-chained-call": "error",
@@ -160,7 +162,6 @@ module.exports = {
         "no-trailing-spaces": "error",
         "no-undef-init": "error",
         "no-undefined": "error",
-        "no-underscore-dangle": "error",
         "no-unmodified-loop-condition": "error",
         "no-unneeded-ternary": "error",
         "no-unused-expressions": "error",
@@ -218,7 +219,6 @@ module.exports = {
             "last"
         ],
         "sort-imports": "error",
-        "sort-keys": "error",
         "sort-vars": "error",
         "space-before-blocks": "error",
         "space-before-function-paren": "off",

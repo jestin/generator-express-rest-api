@@ -81,7 +81,7 @@ function tryUpdateDependencies(generator) {
 		var dependenciesConfig = require(dependenciesPath);
 
 		if (dependenciesConfig && dependenciesConfig.dependencies) {
-			var dependencyName = generator.modelName + "Model";
+			var dependencyName = generator.modelName;
 
 			if (dependenciesConfig.dependencies[dependencyName]) {
 				console.log('dependency already exists in dependencies.json. Dependency: ' + dependencyName);

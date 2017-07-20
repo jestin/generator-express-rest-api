@@ -7,10 +7,37 @@ describe('<%= repositoryClassName %>Repository Tests', function() {
 		<%= repositoryInstanceName %>Repository = require('<%= repositoryRequirePathFromTest %>')({});
 	});
 
-	describe('get<%= repositoryClassName %>Data()', function() {
+	describe('create()', function() {
 
 		it('should be a function', function(done) {
-			expect(<%= repositoryInstanceName %>Repository.get<%= repositoryClassName %>Data).to.be.a('function');
+			expect(<%= repositoryInstanceName %>Repository.create).to.be.a('function');
+			done();
+		});
+
+	});
+
+	describe('retrieve()', function() {
+
+		it('should be a function', function(done) {
+			expect(<%= repositoryInstanceName %>Repository.retrieve).to.be.a('function');
+			done();
+		});
+
+	});
+
+	describe('update()', function() {
+
+		it('should be a function', function(done) {
+			expect(<%= repositoryInstanceName %>Repository.update).to.be.a('function');
+			done();
+		});
+
+	});
+
+	describe('delete()', function() {
+
+		it('should be a function', function(done) {
+			expect(<%= repositoryInstanceName %>Repository.delete).to.be.a('function');
 			done();
 		});
 

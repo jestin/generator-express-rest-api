@@ -3,15 +3,9 @@ function <%= controllerClassName %>Controller(deps) {
 	// set dependencies
 }
 
-function <%= controllerMethod.toLowerCase() %>(req, res, next) {
-	res.status(200).json({ hello: 'world' }); // eslint-disable-line no-magic-numbers
-}
-
-/* eslint-disable object-curly-newline, object-shorthand */
-<%= controllerClassName %>Controller.prototype = {
-	<%= controllerMethod.toLowerCase() %>: <%= controllerMethod.toLowerCase() %>
+<%= controllerClassName %>Controller.prototype.<%= controllerMethod.toLowerCase() %> = function(req, res, next) {
+	return res.status(200).json({ hello: 'world' }); // eslint-disable-line no-magic-numbers
 };
-/* eslint-enable object-curly-newline, object-shorthand */
 
 module.exports = function(deps) {
 	_checkDeps(deps);

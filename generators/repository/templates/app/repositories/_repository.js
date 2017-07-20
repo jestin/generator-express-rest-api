@@ -2,30 +2,20 @@
 function <%= repositoryClassName %>Repository(deps) {
 }
 
-function create(<%= repositoryClassName.toLowerCase() %>) {
-	return Promise.resolve();
-}
+<%= repositoryClassName %>Repository.prototype.create = function(<%= repositoryClassName.toLowerCase() %>) {
+	return Promise.resolve(<%= repositoryClassName.toLowerCase() %>);
+};
 
-/* eslint-disable object-curly-newline, object-shorthand */
-function retrieve(id) {
+<%= repositoryClassName %>Repository.prototype.retrieve = function(id) {
 	return Promise.resolve({ id: id });
-}
+};
 
-function update(<%= repositoryClassName.toLowerCase() %>) {
-	return <%= repositoryClassName.toLowerCase() %>;
-}
+<%= repositoryClassName %>Repository.prototype.update = function(<%= repositoryClassName.toLowerCase() %>) {
+	return Promise.resolve(<%= repositoryClassName.toLowerCase() %>);
+};
 
-function delete(<%= repositoryClassName.toLowerCase() %>) {
+<%= repositoryClassName %>Repository.prototype.delete = function(id) {
 	return Promise.resolve(true);
-}
-
-/* eslint-enable object-curly-newline, object-shorthand */
-
-<%= repositoryClassName %>Repository.prototype = {
-	create,
-	retrieve,
-	update,
-	delete
 };
 
 module.exports = function(deps) {

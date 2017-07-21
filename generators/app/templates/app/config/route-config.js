@@ -12,8 +12,9 @@ function registerRoutes(application) {
 		const route = getRoute(routeItem);
 		const method = getMethod(routeItem);
 		const action = getAction(routeItem);
+		const middleware = getMiddleware(routeItem);
 
-		registerRoute(application)(controller)(route)(method, action);
+		registerRoute(application)(route)(method)(middleware)(controller)(action);
 	});
 
 	createConfigRoute(application);
@@ -84,14 +85,29 @@ function getAction(routeItem) {
 	return routeItem.action;
 }
 
+function getMiddleware(routeItem) {
+	if (!routeItem || !routeItem.middleware || routeItem.middleware.length === 0) {
+		return [];
+	}
+
+	return routeItem.middleware;
+}
 
 function registerRoute(application) {
-	return controller => {
-		return route => {
-			return (method, action) => {
-				application.route(route)[method](function(req, res, next) {
-					controller[action](req, res, next);
+	return route => {
+		return method => {
+			return middleware => {
+				const middlewareConcretes = _.map(middleware, mw => {
+					return application.injectionContainer.getConcrete(mw);
 				});
+
+				return controller => {
+					return action => {
+						application.route(route)[method](...middlewareConcretes, function(req, res, next) {
+							controller[action](req, res, next);
+						});
+					};
+				};
 			};
 		};
 	};

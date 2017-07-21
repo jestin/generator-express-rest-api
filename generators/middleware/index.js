@@ -63,7 +63,7 @@ function copyMiddleware(generator) {
 
 function copyMiddlewareTest(generator) {
 	var middlewareTestDestination = generator.destinationRoot() +
-		'/test/spec/repositories/' +
+		'/test/spec/middlware/' +
 		generator.middlewareName.toLowerCase() +
 		'-middleware.tests.js';
 

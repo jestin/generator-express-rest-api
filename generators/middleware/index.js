@@ -21,7 +21,7 @@ module.exports = yeoman.generators.Base.extend({
 		var generator = this;
 
 		var handleAnswers = function(answers) {
-			generator.middlewareName = answers.middlewareName.toLowerCase();
+			generator.middlewareName = answers.middlewareName;
 			generator.middlewareRequirePathFromTest =  '../../../app/middleware/' + generator.middlewareName;
 
 			done();
@@ -56,7 +56,7 @@ module.exports = yeoman.generators.Base.extend({
 function copyMiddleware(generator) {
 	var middlewareDestination = generator.destinationRoot() +
 		'/app/middleware/' +
-		generator.middlewareName.toLowerCase() + '.js';
+		generator.middlewareName + '.js';
 
 	copyTemplate(generator, 'app/middleware/_middleware.js', middlewareDestination);
 }
@@ -119,6 +119,6 @@ function writeToDependenciesConfig(generator, dependenciesConfig, dependenciesPa
 
 function getMiddlewareRequirePath(generator) {
 	return '../middleware/' +
-		generator.middlewareName.toLowerCase();
+		generator.middlewareName;
 }
 

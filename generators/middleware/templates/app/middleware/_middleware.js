@@ -4,7 +4,7 @@ module.exports = function(deps) {
 	return function(req, res, next) {
 		// Do stuff
 
-		return next(req, res);
+		return next();
 	};
 };
 

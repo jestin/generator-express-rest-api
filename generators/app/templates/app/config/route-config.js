@@ -18,7 +18,6 @@ function registerRoutes(application) {
 	});
 
 	createConfigRoute(application);
-	createErrorHandler(application);
 }
 
 function loadRouteConfig() {
@@ -119,16 +118,6 @@ function createConfigRoute(application) {
 		res.status(200).json(settingsConfig.settings);
 	});
 }
-
-/* eslint-disable max-params, no-unused-vars */
-
-function createErrorHandler(application) {
-	application.use((error, req, res, next) => {
-		return res.status(500).json('an unhandled exception occurred');
-	});
-}
-
-/* eslint-enable max-params, no-unused-vars */
 
 RouteConfig.prototype = { registerRoutes };
 

@@ -11,6 +11,7 @@ application.injectionContainer = require('./injectionContainer.js')({ registry: 
 function configureWorker(application) {
 	configureApplication(application);
 	configureRoutes(application);
+	createErrorHandler(application);
 
 	startServer(application);
 }
@@ -30,6 +31,16 @@ function configureApplication(application) {
 function configureRoutes(application) {
 	routeConfig.registerRoutes(application);
 }
+
+/* eslint-disable max-params, no-unused-vars */
+
+function createErrorHandler(application) {
+	application.use((error, req, res, next) => {
+		return res.status(500).json('an unhandled exception occurred');
+	});
+}
+
+/* eslint-enable max-params, no-unused-vars */
 
 function startServer(application) {
 	var server = http.createServer(application);

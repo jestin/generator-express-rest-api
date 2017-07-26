@@ -6,6 +6,7 @@ var application = express();
 var bodyParser = require('body-parser');
 var routeConfig = require('./route-config');
 var settingsConfig = require('./settings/settings-config');
+var morgan = require('morgan');
 application.injectionContainer = require('./injectionContainer.js')({ registry: './dependencies.json' });
 
 function configureWorker(application) {
@@ -26,6 +27,8 @@ function configureApplication(application) {
 		res.type('application/json');
 		next();
 	});
+
+	application.use(morgan('combined'));
 }
 
 function configureRoutes(application) {

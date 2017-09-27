@@ -1,26 +1,29 @@
 
-function <%= repositoryClassName %>Repository(deps) {
+function <%= repositoryClassName.toLowerCase() %>Repository(deps) {
+	const instance = {};
+
+	instance.create = function(<%= repositoryClassName.toLowerCase() %>) {
+		return Promise.resolve(<%= repositoryClassName.toLowerCase() %>);
+	};
+	
+	instance.retrieve = function(id) {
+		return Promise.resolve({ id: id });
+	};
+	
+	instance.update = function(<%= repositoryClassName.toLowerCase() %>) {
+		return Promise.resolve(<%= repositoryClassName.toLowerCase() %>);
+	};
+	
+	instance.delete = function(id) {
+		return Promise.resolve(true);
+	};
+
+	return instance;
 }
-
-<%= repositoryClassName %>Repository.prototype.create = function(<%= repositoryClassName.toLowerCase() %>) {
-	return Promise.resolve(<%= repositoryClassName.toLowerCase() %>);
-};
-
-<%= repositoryClassName %>Repository.prototype.retrieve = function(id) {
-	return Promise.resolve({ id: id });
-};
-
-<%= repositoryClassName %>Repository.prototype.update = function(<%= repositoryClassName.toLowerCase() %>) {
-	return Promise.resolve(<%= repositoryClassName.toLowerCase() %>);
-};
-
-<%= repositoryClassName %>Repository.prototype.delete = function(id) {
-	return Promise.resolve(true);
-};
 
 module.exports = function(deps) {
 	_checkDeps(deps);
-	return new <%= repositoryClassName %>Repository(deps);
+	return <%= repositoryClassName.toLowerCase() %>Repository(deps);
 };
 
 function _checkDeps(deps) {

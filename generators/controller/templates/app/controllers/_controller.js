@@ -1,15 +1,18 @@
 
-function <%= controllerClassName %>Controller(deps) {
-	// set dependencies
-}
+function <%= controllerClassName.toLowerCase() %>Controller(deps) {
+	const instance = {};
 
-<%= controllerClassName %>Controller.prototype.<%= controllerMethod.toLowerCase() %> = function(req, res, next) {
-	return res.status(200).json({ hello: 'world' }); // eslint-disable-line no-magic-numbers
-};
+	// set dependencies
+
+	instance.<%= controllerMethod.toLowerCase() %> = function(req, res, next) {
+		return res.status(200).json({ hello: 'world' }); // eslint-disable-line no-magic-numbers
+	};
+	return instance;
+}
 
 module.exports = function(deps) {
 	_checkDeps(deps);
-	return new <%= controllerClassName %>Controller(deps);
+	return <%= controllerClassName.toLowerCase() %>Controller(deps);
 };
 
 function _checkDeps(deps) {
